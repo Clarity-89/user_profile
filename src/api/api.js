@@ -39,4 +39,8 @@ const updateAddress = (address) => {
         })
 };
 
-export {login, getProfile, updateAddress};
+export {
+    login,
+    getProfile,
+    updateAddress
+};
