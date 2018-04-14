@@ -6,7 +6,9 @@
   height: 80vh; }
   .login__header {
     text-align: center;
-    color: #aab2bd; }
+    color: #aab2bd;
+    text-transform: uppercase;
+    font-weight: 400; }
   .login__input {
     padding: 8px 15px;
     border: 1px solid #aab2bd; }

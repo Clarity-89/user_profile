@@ -9,6 +9,8 @@ $border: 1px solid $form-color;
   &__header {
     text-align: center;
     color: $form-color;
+    text-transform: uppercase;
+    font-weight: 400;
   }
 
   &__input {
