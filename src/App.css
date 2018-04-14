@@ -11,7 +11,8 @@
     font-weight: 400; }
   .login__input {
     padding: 8px 15px;
-    border: 1px solid #aab2bd; }
+    border: 1px solid #aab2bd;
+    width: 100%; }
   .login .fas {
     padding: 8px 15px;
     border-left: 1px solid #aab2bd;
@@ -22,21 +23,25 @@
     display: flex;
     align-items: center;
     margin-bottom: 1em; }
-    .login__field--username label, .login__field--username input {
-      width: 100%; }
   .login__label {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    width: 100%; }
   .login__btn {
     text-transform: uppercase;
     color: #aab2bd;
     font-weight: 600;
     background: #fff;
-    border-left: none; }
+    border-left: none;
+    width: 25%; }
     .login__btn:hover {
       cursor: pointer;
       background: #aab2bd;
       color: #fff; }
+
+.error-message {
+  color: #e6492e;
+  font-weight: 300; }
 
 .nav {
   text-transform: uppercase;

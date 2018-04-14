@@ -6,14 +6,14 @@ import Swagger from 'swagger-client'
 
 const BASE_URL = 'https://frontend-test.api.ksfmedia.fi/swagger.json';
 
-const login = (params) => {
+const login = (params, errorCallback) => {
     return Swagger(BASE_URL)
         .then(client => {
-            client.apis.auth.post_login(params)
+            client.apis.auth.post_login({body: params, LoginData: params})
                 .then(resp => {
                     return resp;
                 })
-                .catch(err => err)
+                .catch(err => errorCallback(err))
         })
 };
 
@@ -24,7 +24,6 @@ const getProfile = (token) => {
                 .then(resp => {
                     return resp;
                 })
-                .catch(err => err)
         })
 };
 
