@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 import Login from './components/Login';
 import Profile from './components/Profile';
+import {PrivateRoute} from "./components/PrivateRoute";
 
 import logo from './logo.svg';
 import './App.css';
@@ -17,7 +18,7 @@ class App extends Component {
                         <h1 className="App-title">Welcome to React</h1>
                     </header>
                     <Route path="/login" component={Login}/>
-                    <Route path='/profile' component={Profile} />
+                    <PrivateRoute path='/profile' component={Profile} />
                 </div>
             </BrowserRouter>
         );
