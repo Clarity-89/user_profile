@@ -4,8 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Login from './components/Login';
 import Profile from './components/Profile';
 import {PrivateRoute} from "./components/PrivateRoute";
-
-import logo from './logo.svg';
+import {Nav} from "./components/Nav";
 import './App.css';
 
 class App extends Component {
@@ -13,12 +12,9 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="App">
-                    <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo"/>
-                        <h1 className="App-title">Welcome to React</h1>
-                    </header>
+                    <Nav/>
                     <Route path="/login" component={Login}/>
-                    <PrivateRoute path='/profile' component={Profile} />
+                    <PrivateRoute path='/profile' component={Profile}/>
                 </div>
             </BrowserRouter>
         );
