@@ -25,12 +25,15 @@ const api = {
             })
     },
 
-    updateAddress(address, success, error) {
+    updateAddress(params, success, error) {
         return Swagger(BASE_URL)
             .then(client => {
-                client.apis.puts_users_me_address(address)
-                    .then(resp => success(resp))
-                    .catch(err => error(err))
+                client.apis.users.put_users_me_address({
+                    authorization: `Token ${params.token}`,
+                    'new-address': params.address
+                })
+                .then(resp => success(resp))
+                .catch(err => error(err))
             })
     }
 };

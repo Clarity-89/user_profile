@@ -4,10 +4,10 @@
   align-items: center;
   justify-content: center;
   width: 50%;
-  padding: 4em;
+  padding: 6em;
   background: $white;
   margin-top: 3em;
-  border: 1px solid #e6e6e6;
+  border: 1px solid $grey-border;
 
   &__container {
     display: flex;
@@ -17,9 +17,10 @@
     height: 90vh;
   }
 
-
   &__row {
-    width: 300px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
   }
 
   &__title {
@@ -34,11 +35,43 @@
   &__header {
     text-transform: uppercase;
     font-weight: 300;
+    margin-top: 0;
   }
 
   &__data {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: 300;
 
+    &--edit {
+      input {
+        padding: 8px 15px;
+        border: 1px solid $grey-border;
+        width: 100%;
+        font-weight: 300;
+      }
+    }
+  }
+
+  &__icon {
+    display: inline-block;
+    margin-left: 2em;
+    color: $grey-mediumlight;
+
+    &:hover {
+      cursor: pointer;
+      color: #000;
+    }
+
+    &--cancel {
+      margin-left: 1em;
+    }
+  }
+
+  &__address {
+    display: block;
+    width: 300px;
+    word-break: break-all;
   }
 }
