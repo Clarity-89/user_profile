@@ -29,6 +29,11 @@
       text-decoration: none;
       color: $text-color;
     }
+
+    &--home {
+      display: flex;
+      flex-basis: 80%;
+    }
   }
 
   &__link {

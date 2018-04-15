@@ -9,6 +9,10 @@
     color: #aab2bd;
     text-transform: uppercase;
     font-weight: 400; }
+  .login__form {
+    border: 1px solid #e6e6e6;
+    padding: 10% 20%;
+    background: white; }
   .login__input {
     padding: 8px 15px;
     border: 1px solid #aab2bd;
@@ -67,6 +71,9 @@
     .nav__element a {
       text-decoration: none;
       color: #333; }
+    .nav__element--home {
+      display: flex;
+      flex-basis: 80%; }
   .nav__link i {
     font-size: 12px;
     margin-right: 0.5em; }
