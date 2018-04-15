@@ -8,7 +8,8 @@ const auth = {
     },
 
     authenticate(token) {
-        localStorage.setItem('token', token);
+        let tokenObj = {value: token, timestamp: new Date().getTime()};
+        localStorage.setItem('token', JSON.stringify(tokenObj));
     },
 
     logout(cb) {
@@ -16,16 +17,20 @@ const auth = {
         cb();
     },
 
-    isTokenExpired() {
+    isTokenExpired(token) {
+        let timestamp = JSON.parse(token)['timestamp'];
 
-    },
-
-    setTokenExpirationDate() {
-
+        if (timestamp) {
+            return new Date(timestamp).toDateString() !== new Date().toDateString();
+        }
     },
 
     getToken() {
-        return localStorage.getItem('token');
+        let token = localStorage.getItem('token');
+
+        if (token && !this.isTokenExpired(token)) {
+            return JSON.parse(token)['value'];
+        }
     }
 };
 
