@@ -28,15 +28,15 @@ class Nav extends Component {
                             ? (
                                 <Fragment>
                                     <li className="nav__element">
-                                        <Link className="nav__link" to='/profile'> Profile</Link>
+                                        <Link className="nav__link" to='/profile'>Profile</Link>
                                     </li>
                                     <li className="nav__element">
-                                        <button className="nav__btn nav__link" onClick={this.logout}> Logout</button>
+                                        <button className="nav__btn nav__link" onClick={this.logout}>Logout</button>
                                     </li>
                                 </Fragment>
                             )
                             : <li className="nav__element">
-                                <Link className="nav__link" to='/login'><i className="fas fa-user"/> Login</Link>
+                                <Link className="nav__link" to='/login'><i className="fas fa-user"/>Login</Link>
                             </li>
                     }
 

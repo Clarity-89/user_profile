@@ -18,7 +18,8 @@ export default class Login extends Component {
                 incorrectLogin: false,
                 serverError: false
             },
-            redirect: false
+            redirect: false,
+            loading: false
         };
 
         this.handleInput = this.handleInput.bind(this);
@@ -42,8 +43,10 @@ export default class Login extends Component {
 
         if (!username || !password) {
             this.setState({errors: {...this.state.errors, formInputEmpty: true}});
+            // Remove form animation after half a second
+            setTimeout(() => this.setState({errors: {...this.state.errors, formInputEmpty: false}}), 500)
         } else {
-            this.setState({errors: {...this.state.errors, formInputEmpty: false}});
+            this.setState({errors: {...this.state.errors, formInputEmpty: false}, loading: true});
 
             api.login({
                 username: username,
@@ -56,13 +59,13 @@ export default class Login extends Component {
         let {token} = resp.body;
         if (resp.ok && token) {
             auth.authenticate(token);
-            this.setState({redirect: true});
+            this.setState({redirect: true, loading: false});
         }
     }
 
     handleErrors(err) {
         //Reset previously registered errors
-        this.setState({errors: {...this.state.errors, incorrectLogin: false, serverError: false}});
+        this.setState({errors: {...this.state.errors, incorrectLogin: false, serverError: false}, loading: false});
 
         if (err.status === 400) {
             this.setState({errors: {...this.state.errors, incorrectLogin: true}})
@@ -72,12 +75,14 @@ export default class Login extends Component {
     }
 
     render() {
-        let {username, password, redirect} = this.state;
+        let {username, password, redirect, loading} = this.state;
         let {formInputEmpty, serverError, incorrectLogin} = this.state.errors;
 
         let formClasses = classNames("login__form", {
             "login__form--empty": formInputEmpty
         });
+
+        let btnText = loading ? 'Loading...' : 'Login';
 
         if (auth.isAuthenticated()) {
             return <Redirect to="/profile"/>
@@ -90,40 +95,42 @@ export default class Login extends Component {
 
         return (
             <div className="login">
-                <form className={formClasses} noValidate>
-                    <h2 className="login__header">Login</h2>
-                    <ErrorMessage serverError={serverError} incorrectLogin={incorrectLogin}/>
-                    <div className="login__field login__field--username">
-                        <label className="login__label">
-                            <i className="fas fa-user"/>
-                            <input className="login__input"
-                                   name="email"
-                                   placeholder="Username"
-                                   value={username}
-                                   type="email"
-                                   onChange={(e) => this.handleInput(e, 'username')}
-                            />
-                        </label>
-                    </div>
-                    <div className="login__field login__field--password">
-                        <label className="login__label">
-                            <i className="fas fa-key"/>
-                            <input className="login__input"
-                                   type="password"
-                                   name="password"
-                                   placeholder="Password"
-                                   value={password}
-                                   onChange={(e) => this.handleInput(e, 'password')}
-                            />
-                        </label>
+                <div className="login__wrapper">
+                    <form className={formClasses} noValidate>
+                        <h2 className="login__header">Login</h2>
+                        <ErrorMessage serverError={serverError} incorrectLogin={incorrectLogin}/>
+                        <div className="login__field login__field--username">
+                            <label className="login__label">
+                                <i className="fas fa-user"/>
+                                <input className="login__input"
+                                       name="email"
+                                       placeholder="Username"
+                                       value={username}
+                                       type="email"
+                                       onChange={(e) => this.handleInput(e, 'username')}
+                                />
+                            </label>
+                        </div>
+                        <div className="login__field login__field--password">
+                            <label className="login__label">
+                                <i className="fas fa-key"/>
+                                <input className="login__input"
+                                       type="password"
+                                       name="password"
+                                       placeholder="Password"
+                                       value={password}
+                                       onChange={(e) => this.handleInput(e, 'password')}
+                                />
+                            </label>
 
-                        <input className="login__input login__btn"
-                               value="Log in"
-                               type="submit"
-                               onClick={this.doLogin}
-                        />
-                    </div>
-                </form>
+                            <input className="login__input login__btn"
+                                   value={btnText}
+                                   type="submit"
+                                   onClick={this.doLogin}
+                            />
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     }
