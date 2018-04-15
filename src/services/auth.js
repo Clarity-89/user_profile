@@ -3,11 +3,24 @@
  **/
 
 const auth = {
-    isAuthenticated: false,
-    authenticate(cb) {
+    isAuthenticated() {
+        return localStorage.getItem('token');
+    },
+
+    authenticate(token) {
+        localStorage.setItem('token', token);
+    },
+
+    logout(cb) {
+        localStorage.removeItem('token');
+        cb();
+    },
+
+    isTokenExpired() {
 
     },
-    logout(cb) {
+
+    setTokenExpirationDate() {
 
     }
 };

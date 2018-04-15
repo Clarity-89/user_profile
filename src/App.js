@@ -4,7 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Login from './components/Login';
 import Profile from './components/Profile';
 import {PrivateRoute} from "./components/PrivateRoute";
-import {Nav} from "./components/Nav";
+import Nav from "./components/Nav";
 import './App.css';
 
 class App extends Component {

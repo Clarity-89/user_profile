@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 import classNames from 'classnames';
 
 import {ErrorMessage} from "./ErrorMessage";
 import {auth} from '../services/auth';
-import {login} from '../api/api';
+import {api} from '../api/api';
 
 export default class Login extends Component {
     constructor() {
@@ -16,12 +17,14 @@ export default class Login extends Component {
                 formInputEmpty: false,
                 incorrectLogin: false,
                 serverError: false
-            }
+            },
+            redirect: false
         };
 
         this.handleInput = this.handleInput.bind(this);
         this.doLogin = this.doLogin.bind(this);
         this.handleErrors = this.handleErrors.bind(this);
+        this.loginSuccess = this.loginSuccess.bind(this);
     }
 
     handleInput(e, type) {
@@ -42,10 +45,18 @@ export default class Login extends Component {
         } else {
             this.setState({errors: {...this.state.errors, formInputEmpty: false}});
 
-            login({
+            api.login({
                 username: username,
                 password: password
-            }, this.handleErrors).then(resp => console.log('form submit', resp))
+            }, this.loginSuccess, this.handleErrors);
+        }
+    }
+
+    loginSuccess(resp) {
+        let {token} = resp.body;
+        if (resp.ok && token) {
+            auth.authenticate(token);
+            this.setState({redirect: true});
         }
     }
 
@@ -61,12 +72,21 @@ export default class Login extends Component {
     }
 
     render() {
-        let {username, password} = this.state;
+        let {username, password, redirect} = this.state;
         let {formInputEmpty, serverError, incorrectLogin} = this.state.errors;
 
         let formClasses = classNames("login__form", {
             "login__form--empty": formInputEmpty
         });
+
+        if (auth.isAuthenticated()) {
+            return <Redirect to="/profile"/>
+        }
+
+        if (redirect) {
+            let redirectTo = this.props.location.state || {pathname: '/profile'};
+            return <Redirect to={redirectTo}/>
+        }
 
         return (
             <div className="login">

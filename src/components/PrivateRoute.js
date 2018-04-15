@@ -9,7 +9,7 @@ import {auth} from '../services/auth';
  */
 const PrivateRoute = ({component: Component, ...rest}) => (
     <Route {...rest} render={(props) => (
-        auth.isAuthenticated
+        auth.isAuthenticated()
             ? <Component {...props} />
             : <Redirect to={{
                 pathname: '/login',
