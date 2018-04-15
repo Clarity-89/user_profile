@@ -10,30 +10,27 @@ const api = {
     login(params, success, error) {
         return Swagger(BASE_URL)
             .then(client => {
-                client.apis.auth.post_login({body: params, LoginData: params})
+                client.apis.auth.post_login({LoginData: params})
                     .then(resp => success(resp))
                     .catch(err => error(err))
             })
     },
 
-    getProfile(token) {
+    getProfile(token, success, error) {
         return Swagger(BASE_URL)
             .then(client => {
-                client.apis.users.get_users_me(token)
-                    .then(resp => {
-                        return resp;
-                    })
+                client.apis.users.get_users_me({authorization: `Token ${token}`})
+                    .then(resp => success(resp))
+                    .catch(err => error(err))
             })
     },
 
-    updateAddress(address) {
+    updateAddress(address, success, error) {
         return Swagger(BASE_URL)
             .then(client => {
                 client.apis.puts_users_me_address(address)
-                    .then(resp => {
-                        return resp;
-                    })
-                    .catch(err => err)
+                    .then(resp => success(resp))
+                    .catch(err => error(err))
             })
     }
 };

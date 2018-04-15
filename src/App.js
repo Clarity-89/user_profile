@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
 
-import Login from './components/Login';
-import Profile from './components/Profile';
-import {PrivateRoute} from "./components/PrivateRoute";
-import Nav from "./components/Nav";
+import Login from './js/components/Login';
+import Profile from './js/components/Profile';
+import {PrivateRoute} from "./js/components/PrivateRoute";
+import Nav from "./js/components/Nav";
 import './App.css';
 
 class App extends Component {

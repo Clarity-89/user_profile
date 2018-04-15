@@ -4,7 +4,7 @@
 
 const auth = {
     isAuthenticated() {
-        return localStorage.getItem('token');
+        return !!localStorage.getItem('token');
     },
 
     authenticate(token) {
@@ -22,6 +22,10 @@ const auth = {
 
     setTokenExpirationDate() {
 
+    },
+
+    getToken() {
+        return localStorage.getItem('token');
     }
 };
 

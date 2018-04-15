@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import {ErrorMessage} from "./ErrorMessage";
 import {auth} from '../services/auth';
-import {api} from '../api/api';
+import {api} from '../services/api';
 
 export default class Login extends Component {
     constructor() {
