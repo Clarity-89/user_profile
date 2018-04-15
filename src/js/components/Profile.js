@@ -46,23 +46,25 @@ export default class Profile extends Component {
 
         return (
             loading
-                ? <div className="loader"><img src={loader}/></div>
+                ? <div className="loader"><img src={loader} alt="Loader"/></div>
                 : (
-                    <div className="profile">
-                        <h2 className="profile__header">My Profile</h2>
-                        <div className="profile__row">
-                            <h4 className="profile__title">Name</h4>
-                            <p className="profile__data profile__name">{name}</p>
-                        </div>
+                    <div className="profile__container">
+                        <div className="profile">
+                            <h2 className="profile__header">My Profile</h2>
+                            <div className="profile__row">
+                                <h5 className="profile__title"><i className="fas fa-user"/> Name</h5>
+                                <p className="profile__data profile__name">{name}</p>
+                            </div>
 
-                        <div className="profile__row">
-                            <h4 className="profile__title">Address</h4>
-                            <p className="profile__data profile__address">{address}</p>
-                        </div>
+                            <div className="profile__row">
+                                <h5 className="profile__title"><i className="fas fa-map-marker"/> Address</h5>
+                                <p className="profile__data profile__address">{address}</p>
+                            </div>
 
-                        <div className="profile__row">
-                            <h4 className="profile__title">Email</h4>
-                            <p className="profile__data profile__email">{email}</p>
+                            <div className="profile__row">
+                                <h5 className="profile__title"><i className="fas fa-envelope"/> Email</h5>
+                                <p className="profile__data profile__email">{email}</p>
+                            </div>
                         </div>
                     </div>
                 )

@@ -1,0 +1,44 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  padding: 4em;
+  background: $white;
+  margin-top: 3em;
+  border: 1px solid #e6e6e6;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+  }
+
+
+  &__row {
+    width: 300px;
+  }
+
+  &__title {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: $grey-mediumlight;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 0;
+  }
+
+  &__header {
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+
+  &__data {
+    font-size: 16px;
+    font-weight: 300;
+
+  }
+}

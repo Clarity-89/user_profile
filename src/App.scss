@@ -2,7 +2,9 @@
 @import "scss/login";
 @import "scss/navbar";
 @import "scss/loader";
+@import "scss/profile";
 
 body {
   font-family: 'Roboto', sans-serif;
+  background: $grey-light;
 }
