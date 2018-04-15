@@ -22,11 +22,17 @@ export default class Nav extends Component {
                         auth.isAuthenticated()
                             ? (
                                 <Fragment>
-                                    <li className="nav__element"><Link to='/profile'> Profile</Link></li>
-                                    <li className="nav__element"><a href='#' onClick={this.logout}> Logout</a></li>
+                                    <li className="nav__element">
+                                        <Link className="nav__link" to='/profile'> Profile</Link>
+                                    </li>
+                                    <li className="nav__element">
+                                        <button className="nav__btn nav__link" onClick={this.logout}> Logout</button>
+                                    </li>
                                 </Fragment>
                             )
-                            : <li className="nav__element"><Link to='/login'>Login</Link></li>
+                            : <li className="nav__element">
+                                <Link className="nav__link" to='/login'><i className="fas fa-user"/> Login</Link>
+                            </li>
                     }
                 </ul>
             </nav>
