@@ -4,7 +4,18 @@
 
 const auth = {
     isAuthenticated() {
-        return !!localStorage.getItem('token');
+        let token = localStorage.getItem('token');
+
+        if (token) {
+            if (this.isTokenExpired(token)) {
+                this.clearToken();
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
     },
 
     authenticate(token) {
@@ -31,6 +42,10 @@ const auth = {
         if (token && !this.isTokenExpired(token)) {
             return JSON.parse(token)['value'];
         }
+    },
+
+    clearToken() {
+        localStorage.removeItem('token');
     }
 };
 
