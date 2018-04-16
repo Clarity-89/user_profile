@@ -210,3 +210,9 @@
 
 body {
   background: #f7f5f3; }
+
+.error-global {
+  text-align: center;
+  margin-top: 5%;
+  font-size: 32px;
+  color: #333; }

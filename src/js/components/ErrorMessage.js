@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ErrorMessage = ({serverError, incorrectLogin}) => {
+const ErrorMessage = ({serverError, incorrectLogin, extraClasses=''}) => {
     let text = "";
     let hasErrors = serverError || incorrectLogin;
 
@@ -12,7 +12,7 @@ const ErrorMessage = ({serverError, incorrectLogin}) => {
 
     return (
         hasErrors
-            ? <p className="error-message">{text}</p>
+            ? <p className={"error-message " + extraClasses}>{text}</p>
             : null
     )
 };

@@ -51,7 +51,9 @@ export default class Login extends Component {
             api.login({
                 username: username,
                 password: password
-            }, this.loginSuccess, this.handleErrors);
+            })
+                .then(resp => this.loginSuccess(resp))
+                .catch(error => this.handleErrors(error));
         }
     }
 
@@ -77,17 +79,16 @@ export default class Login extends Component {
     render() {
         let {username, password, redirect, loading} = this.state;
         let {formInputEmpty, serverError, incorrectLogin} = this.state.errors;
-
         let formClasses = classNames("login__form", {
             "login__form--empty": formInputEmpty
         });
-
         let btnText = loading ? 'Loading...' : 'Login';
 
         if (auth.isAuthenticated()) {
             return <Redirect to="/profile"/>
         }
 
+        // Redirect to referer or to profile after login
         if (redirect) {
             let redirectTo = this.props.location.state || {pathname: '/profile'};
             return <Redirect to={redirectTo}/>

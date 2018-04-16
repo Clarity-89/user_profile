@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+
+import {ErrorMessage} from "./ErrorMessage";
 
 import {api} from '../services/api';
 import {auth} from '../services/auth';
@@ -14,7 +17,8 @@ export default class Profile extends Component {
             email: '',
             error: false,
             loading: true,
-            editing: false
+            editing: false,
+            redirect: false
         };
 
         this.getData = this.getData.bind(this);
@@ -33,7 +37,9 @@ export default class Profile extends Component {
 
     getData() {
         let token = auth.getToken();
-        api.getProfile(token, this.setData, this.handleError);
+        api.getProfile(token)
+            .then(resp => this.setData(resp))
+            .catch(error => this.handleError(error));
     }
 
     setData(resp) {
@@ -43,8 +49,18 @@ export default class Profile extends Component {
         }
     }
 
-    handleError() {
-        this.setState({error: true, loading: false});
+    /**
+     * Handle profile retrieving errors.
+     * If response from the API is 401 then the token is no longer valid and has to be cleared, while the user is
+     * redirected to '/login' page. Else generic error message is displayed.
+     */
+    handleError(error) {
+        if (error.status === 401) {
+            auth.clearToken();
+            this.setState({redirect: true});
+        } else {
+            this.setState({error: true, loading: false});
+        }
     }
 
     editProfile() {
@@ -57,7 +73,9 @@ export default class Profile extends Component {
 
     updateAddress() {
         let params = {address: this.state.address, token: auth.getToken()};
-        api.updateAddress(params, this.cancelUpdate, this.handleError);
+        api.updateAddress(params)
+            .then(() => this.cancelUpdate())
+            .catch(error => this.handleError(error));
     }
 
     cancelUpdate() {
@@ -74,56 +92,65 @@ export default class Profile extends Component {
     }
 
     render() {
-        let {name, email, address, loading, editing} = this.state;
+        let {name, email, address, loading, editing, redirect, error} = this.state;
+
+        if (redirect) {
+            let redirectTo = {pathname: '/login'};
+            return <Redirect to={redirectTo}/>
+        }
 
         return (
-            loading
-                ? <div className="loader"><img src={loader} alt="Loader"/></div>
-                : (
-                    <div className="profile__container">
-                        <div className="profile">
-                            <h2 className="profile__header">My Profile</h2>
-                            <div className="profile__row">
-                                <h5 className="profile__title"><i className="fas fa-user"/> Name</h5>
-                                <p className="profile__data profile__name">{name}</p>
-                            </div>
+            error
+                ? (
+                    <ErrorMessage serverError={true} extraClasses="error-global"/>
+                ) :
+                loading
+                    ? <div className="loader"><img src={loader} alt="Loader"/></div>
+                    : (
+                        <div className="profile__container">
+                            <div className="profile">
+                                <h2 className="profile__header">My Profile</h2>
+                                <div className="profile__row">
+                                    <h5 className="profile__title"><i className="fas fa-user"/> Name</h5>
+                                    <p className="profile__data profile__name">{name}</p>
+                                </div>
 
-                            <div className="profile__row">
-                                <h5 className="profile__title"><i className="fas fa-map-marker-alt"/> Address</h5>
-                                {
-                                    editing ? (
-                                        <p className="profile__data profile__data--edit">
-                                            <input type="text"
-                                                   value={address}
-                                                   placeholder="Address"
-                                                   onChange={this.changeAddress}
-                                                   onKeyPress={this.handleKeyPress}
-                                            />
-                                            <i className="fas fa-save profile__icon profile__icon--save"
-                                               onClick={this.updateAddress}
-                                            />
-                                            <i className="fas fa-times profile__icon profile__icon--cancel"
-                                               onClick={this.cancelUpdate}
-                                            />
-                                        </p>
-                                    ) : (
-                                        <p className="profile__data">
-                                            <span className="profile__address">{address}</span>
-                                            <i className="fas fa-pencil-alt profile__icon profile__icon--edit"
-                                               onClick={this.editProfile}
-                                            />
-                                        </p>
-                                    )
-                                }
-                            </div>
+                                <div className="profile__row">
+                                    <h5 className="profile__title"><i className="fas fa-map-marker-alt"/> Address</h5>
+                                    {
+                                        editing ? (
+                                            <p className="profile__data profile__data--edit">
+                                                <input type="text"
+                                                       value={address}
+                                                       placeholder="Address"
+                                                       onChange={this.changeAddress}
+                                                       onKeyPress={this.handleKeyPress}
+                                                />
+                                                <i className="fas fa-save profile__icon profile__icon--save"
+                                                   onClick={this.updateAddress}
+                                                />
+                                                <i className="fas fa-times profile__icon profile__icon--cancel"
+                                                   onClick={this.cancelUpdate}
+                                                />
+                                            </p>
+                                        ) : (
+                                            <p className="profile__data">
+                                                <span className="profile__address">{address}</span>
+                                                <i className="fas fa-pencil-alt profile__icon profile__icon--edit"
+                                                   onClick={this.editProfile}
+                                                />
+                                            </p>
+                                        )
+                                    }
+                                </div>
 
-                            <div className="profile__row">
-                                <h5 className="profile__title"><i className="fas fa-envelope"/> Email</h5>
-                                <p className="profile__data profile__email">{email}</p>
+                                <div className="profile__row">
+                                    <h5 className="profile__title"><i className="fas fa-envelope"/> Email</h5>
+                                    <p className="profile__data profile__email">{email}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )
+                    )
         )
     }
 }

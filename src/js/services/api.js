@@ -7,34 +7,24 @@ import Swagger from 'swagger-client'
 const BASE_URL = 'https://frontend-test.api.ksfmedia.fi/swagger.json';
 
 const api = {
-    login(params, success, error) {
+    login(params) {
         return Swagger(BASE_URL)
-            .then(client => {
-                client.apis.auth.post_login({LoginData: params})
-                    .then(resp => success(resp))
-                    .catch(err => error(err))
-            })
+            .then(client => client.apis.auth.post_login({LoginData: params}));
     },
 
-    getProfile(token, success, error) {
+    getProfile(token) {
         return Swagger(BASE_URL)
-            .then(client => {
-                client.apis.users.get_users_me({authorization: `Token ${token}`})
-                    .then(resp => success(resp))
-                    .catch(err => error(err))
-            })
+            .then(client => client.apis.users.get_users_me({authorization: `Token ${token}`}));
     },
 
-    updateAddress(params, success, error) {
+    updateAddress(params) {
         return Swagger(BASE_URL)
             .then(client => {
                 client.apis.users.put_users_me_address({
                     authorization: `Token ${params.token}`,
                     'new-address': params.address
-                })
-                .then(resp => success(resp))
-                .catch(err => error(err))
-            })
+                });
+            });
     }
 };
 

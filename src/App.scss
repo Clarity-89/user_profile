@@ -12,3 +12,10 @@
 body {
   background: $grey-light;
 }
+
+.error-global {
+  text-align: center;
+  margin-top: 5%;
+  font-size: 32px;
+  color: $text-color;
+}
