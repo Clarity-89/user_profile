@@ -1,24 +1,24 @@
-####How to run the project locally
-#####Install dependencies
+#### How to run the project locally
+##### Install dependencies
 ```
 $ npm install
 ```
 
-#####Start the development server
+##### Start the development server
 ```
 $ npm start
 ```
 
-#####Watch `.scss` files to compile them to `.css`
+##### Watch `.scss` files to compile them to `.css`
 ```
 $ npm run watch-css 
 ```
 
-#####Make production build of the app
+##### Make production build of the app
 ```
 $ npm run build
 ```
-####Note on the source files structure
+#### Note on the source files structure
 The source folder structure is as follows:
 ```
 src/
