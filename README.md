@@ -14,7 +14,7 @@ $ npm start
 $ npm run watch-css 
 ```
 
-##### Make production build of the app
+##### When ready to deploy, make production build of the app
 ```
 $ npm run build
 ```
@@ -38,6 +38,6 @@ src/
 ```
 
 There is a slight deviation from the folder structure provided by `create-react-app`
-to make managing component files easier. Therefore when adding new component/module it should be placed into 
+to make managing component files easier. Therefore when adding a new component/module it should be placed into 
 respective folder (js or scss) and then imported into top-level App component for `.scss` or into relevant JS file/top-level App component.
 
