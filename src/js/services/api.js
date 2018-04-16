@@ -1,7 +1,7 @@
 import Swagger from 'swagger-client'
 
 /**
- * Helper functions for communicating with the API
+ * Helper functions for communication with the API
  */
 
 const BASE_URL = 'https://frontend-test.api.ksfmedia.fi/swagger.json';
